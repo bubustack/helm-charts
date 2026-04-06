@@ -1,0 +1,60 @@
+name: Publish Helm Charts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'charts/**'
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+
+      - name: Lint charts
+        run: |
+          set -euo pipefail
+          for chart in charts/*/Chart.yaml; do
+            chart_dir=$(dirname "$chart")
+            echo "::group::Linting ${chart_dir}"
+            helm lint "$chart_dir"
+            echo "::endgroup::"
+          done
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          owner: bubustack
+          repo: helm-charts
+          charts_dir: charts
+          packages_dir: .cr-release-packages
+          charts_repo_url: https://bubustack.github.io/helm-charts
+
+      - name: Push packages to GHCR
+        env:
+          OCI_REGISTRY: ghcr.io/${{ github.repository_owner }}/charts
+        run: |
+          set -euo pipefail
+          if ls .cr-release-packages/*.tgz >/dev/null 2>&1; then
+            echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username "${{ github.actor }}" --password-stdin
+            for chart in .cr-release-packages/*.tgz; do
+              echo "Publishing ${chart} to ${OCI_REGISTRY}"
+              helm push "${chart}" "oci://${OCI_REGISTRY}"
+            done
+          else
+            echo "No chart packages produced in this run."
+          fi

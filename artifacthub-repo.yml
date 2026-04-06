@@ -1,0 +1,6 @@
+# Artifact Hub repository metadata
+# https://artifacthub.io/docs/topics/repositories/#helm-charts-repositories
+repositoryID: # Will be assigned by Artifact Hub after registration
+owners:
+  - name: BubuStack
+    email: ping@bubustack.io
