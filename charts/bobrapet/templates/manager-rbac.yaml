@@ -1,0 +1,254 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-manager-role
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - configmaps
+  - pods
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - events
+  verbs:
+  - create
+  - patch
+  - update
+- apiGroups:
+  - ""
+  resources:
+  - pods/log
+  verbs:
+  - get
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  - serviceaccounts
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - ""
+  resources:
+  - services
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - statefulsets
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - bubustack.io
+  resources:
+  - engrams
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - bubustack.io
+  resources:
+  - engrams/finalizers
+  - impulses/finalizers
+  - stories/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - bubustack.io
+  resources:
+  - engrams/status
+  - impulses/status
+  - stories/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - bubustack.io
+  resources:
+  - impulses
+  - stories
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - catalog.bubustack.io
+  resources:
+  - engramtemplates
+  - impulsetemplates
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - catalog.bubustack.io
+  resources:
+  - engramtemplates/status
+  - impulsetemplates/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - policy.bubustack.io
+  resources:
+  - referencegrants
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - rolebindings
+  verbs:
+  - create
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - roles
+  verbs:
+  - bind
+  - create
+  - escalate
+  - get
+  - list
+  - patch
+  - watch
+- apiGroups:
+  - runs.bubustack.io
+  resources:
+  - effectclaims
+  verbs:
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - runs.bubustack.io
+  resources:
+  - effectclaims/status
+  - stepruns/status
+  - storyruns/status
+  - storytriggers/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - runs.bubustack.io
+  resources:
+  - stepruns
+  - storyruns
+  - storytriggers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - runs.bubustack.io
+  resources:
+  - stepruns/finalizers
+  - storyruns/finalizers
+  - storytriggers/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - transport.bubustack.io
+  resources:
+  - transportbindings
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - transport.bubustack.io
+  resources:
+  - transportbindings/status
+  - transports/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - transport.bubustack.io
+  resources:
+  - transports
+  verbs:
+  - get
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-manager-rolebinding
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: '{{ include "bobrapet.fullname" . }}-manager-role'
+subjects:
+- kind: ServiceAccount
+  name: '{{ include "bobrapet.serviceAccountName" . }}'
+  namespace: '{{ .Release.Namespace }}'

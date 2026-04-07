@@ -1,0 +1,21 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-story-viewer-role
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - bubustack.io
+  resources:
+  - stories
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - bubustack.io
+  resources:
+  - stories/status
+  verbs:
+  - get

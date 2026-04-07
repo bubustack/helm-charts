@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-runs-storyrun-admin-role
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - runs.bubustack.io
+  resources:
+  - storyruns
+  verbs:
+  - '*'
+- apiGroups:
+  - runs.bubustack.io
+  resources:
+  - storyruns/status
+  verbs:
+  - get

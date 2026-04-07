@@ -1,0 +1,198 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-operator-config
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+data:
+  controller.cleanup-interval: {{ .Values.operatorConfig.controllerCleanupInterval
+    | quote }}
+  controller.max-concurrent-reconciles: {{ .Values.operatorConfig.controllerMaxConcurrentReconciles
+    | quote }}
+  controller.max-story-with-block-size-bytes: {{ .Values.operatorConfig.controllerMaxStoryWithBlockSizeBytes
+    | quote }}
+  controller.reconcile-timeout: {{ .Values.operatorConfig.controllerReconcileTimeout
+    | quote }}
+  controller.requeue-base-delay: {{ .Values.operatorConfig.controllerRequeueBaseDelay
+    | quote }}
+  controller.requeue-max-delay: {{ .Values.operatorConfig.controllerRequeueMaxDelay
+    | quote }}
+  controller.storage.provider: {{ .Values.operatorConfig.controllerStorageProvider
+    | quote }}
+  controller.storage.s3.bucket: {{ .Values.operatorConfig.controllerStorageS3Bucket
+    | quote }}
+  controller.storage.s3.endpoint: {{ .Values.operatorConfig.controllerStorageS3Endpoint
+    | quote }}
+  controller.storage.s3.region: {{ .Values.operatorConfig.controllerStorageS3Region
+    | quote }}
+  controller.storage.s3.use-path-style: {{ .Values.operatorConfig.controllerStorageS3UsePathStyle
+    | quote }}
+  controller.transport.grpc.default-tls-secret: {{ .Values.operatorConfig.controllerTransportGrpcDefaultTlsSecret
+    | quote }}
+  controller.transport.grpc.enable-downstream-targets: {{ .Values.operatorConfig.controllerTransportGrpcEnableDownstreamTargets
+    | quote }}
+  controller.transport.heartbeat-interval: {{ .Values.operatorConfig.controllerTransportHeartbeatInterval
+    | quote }}
+  controller.transport.heartbeat-timeout: {{ .Values.operatorConfig.controllerTransportHeartbeatTimeout
+    | quote }}
+  debug.enable-metrics: {{ .Values.operatorConfig.debugEnableMetrics | quote }}
+  debug.enable-step-output-logging: {{ .Values.operatorConfig.debugEnableStepOutputLogging
+    | quote }}
+  debug.enable-verbose-logging: {{ .Values.operatorConfig.debugEnableVerboseLogging
+    | quote }}
+  engram.default-channel-buffer-size: {{ .Values.operatorConfig.engramDefaultChannelBufferSize
+    | quote }}
+  engram.default-dial-timeout-seconds: {{ .Values.operatorConfig.engramDefaultDialTimeoutSeconds
+    | quote }}
+  engram.default-graceful-shutdown-timeout-seconds: {{ .Values.operatorConfig.engramDefaultGracefulShutdownTimeoutSeconds
+    | quote }}
+  engram.default-grpc-heartbeat-interval-seconds: {{ .Values.operatorConfig.engramDefaultGrpcHeartbeatIntervalSeconds
+    | quote }}
+  engram.default-grpc-port: {{ .Values.operatorConfig.engramDefaultGrpcPort | quote
+    }}
+  engram.default-hang-timeout-seconds: {{ .Values.operatorConfig.engramDefaultHangTimeoutSeconds
+    | quote }}
+  engram.default-max-inline-size: {{ .Values.operatorConfig.engramDefaultMaxInlineSize
+    | quote }}
+  engram.default-max-recursion-depth: {{ .Values.operatorConfig.engramDefaultMaxRecursionDepth
+    | quote }}
+  engram.default-max-recv-msg-bytes: {{ .Values.operatorConfig.engramDefaultMaxRecvMsgBytes
+    | quote }}
+  engram.default-max-send-msg-bytes: {{ .Values.operatorConfig.engramDefaultMaxSendMsgBytes
+    | quote }}
+  engram.default-message-timeout-seconds: {{ .Values.operatorConfig.engramDefaultMessageTimeoutSeconds
+    | quote }}
+  engram.default-reconnect-base-backoff-millis: {{ .Values.operatorConfig.engramDefaultReconnectBaseBackoffMillis
+    | quote }}
+  engram.default-reconnect-max-backoff-seconds: {{ .Values.operatorConfig.engramDefaultReconnectMaxBackoffSeconds
+    | quote }}
+  engram.default-reconnect-max-retries: {{ .Values.operatorConfig.engramDefaultReconnectMaxRetries
+    | quote }}
+  engram.default-storage-timeout-seconds: {{ .Values.operatorConfig.engramDefaultStorageTimeoutSeconds
+    | quote }}
+  engram.default-termination-grace-period-seconds: {{ .Values.operatorConfig.engramDefaultTerminationGracePeriodSeconds
+    | quote }}
+  engram.max-concurrent-reconciles: {{ .Values.operatorConfig.engramMaxConcurrentReconciles
+    | quote }}
+  engram.rate-limiter.base-delay: {{ .Values.operatorConfig.engramRateLimiterBaseDelay
+    | quote }}
+  engram.rate-limiter.max-delay: {{ .Values.operatorConfig.engramRateLimiterMaxDelay
+    | quote }}
+  images.pull-policy: {{ .Values.operatorConfig.imagesPullPolicy | quote }}
+  impulse.max-concurrent-reconciles: {{ .Values.operatorConfig.impulseMaxConcurrentReconciles
+    | quote }}
+  impulse.rate-limiter.base-delay: {{ .Values.operatorConfig.impulseRateLimiterBaseDelay
+    | quote }}
+  impulse.rate-limiter.max-delay: {{ .Values.operatorConfig.impulseRateLimiterMaxDelay
+    | quote }}
+  job.backoff-limit: {{ .Values.operatorConfig.jobBackoffLimit | quote }}
+  job.restart-policy: {{ .Values.operatorConfig.jobRestartPolicy | quote }}
+  job.ttl-seconds-after-finished: {{ .Values.operatorConfig.jobTtlSecondsAfterFinished
+    | quote }}
+  loop.default-batch-size: {{ .Values.operatorConfig.loopDefaultBatchSize | quote
+    }}
+  loop.max-batch-size: {{ .Values.operatorConfig.loopMaxBatchSize | quote }}
+  loop.max-concurrency: {{ .Values.operatorConfig.loopMaxConcurrency | quote }}
+  loop.max-concurrency-limit: {{ .Values.operatorConfig.loopMaxConcurrencyLimit |
+    quote }}
+  loop.max-iterations: {{ .Values.operatorConfig.loopMaxIterations | quote }}
+  references.cross-namespace-policy: {{ .Values.operatorConfig.referencesCrossNamespacePolicy
+    | quote }}
+  resources.default.cpu-limit: {{ .Values.operatorConfig.resourcesDefaultCpuLimit
+    | quote }}
+  resources.default.cpu-request: {{ .Values.operatorConfig.resourcesDefaultCpuRequest
+    | quote }}
+  resources.default.memory-limit: {{ .Values.operatorConfig.resourcesDefaultMemoryLimit
+    | quote }}
+  resources.default.memory-request: {{ .Values.operatorConfig.resourcesDefaultMemoryRequest
+    | quote }}
+  resources.engram.cpu-limit: {{ .Values.operatorConfig.resourcesEngramCpuLimit |
+    quote }}
+  resources.engram.cpu-request: {{ .Values.operatorConfig.resourcesEngramCpuRequest
+    | quote }}
+  resources.engram.memory-limit: {{ .Values.operatorConfig.resourcesEngramMemoryLimit
+    | quote }}
+  resources.engram.memory-request: {{ .Values.operatorConfig.resourcesEngramMemoryRequest
+    | quote }}
+  retry.exponential-backoff-base: {{ .Values.operatorConfig.retryExponentialBackoffBase
+    | quote }}
+  retry.exponential-backoff-max: {{ .Values.operatorConfig.retryExponentialBackoffMax
+    | quote }}
+  retry.max-retries: {{ .Values.operatorConfig.retryMaxRetries | quote }}
+  security.allow-privilege-escalation: {{ .Values.operatorConfig.securityAllowPrivilegeEscalation
+    | quote }}
+  security.automount-service-account-token: {{ .Values.operatorConfig.securityAutomountServiceAccountToken
+    | quote }}
+  security.drop-capabilities: {{ .Values.operatorConfig.securityDropCapabilities
+    | quote }}
+  security.read-only-root-filesystem: {{ .Values.operatorConfig.securityReadOnlyRootFilesystem
+    | quote }}
+  security.run-as-non-root: {{ .Values.operatorConfig.securityRunAsNonRoot | quote
+    }}
+  security.run-as-user: {{ .Values.operatorConfig.securityRunAsUser | quote }}
+  security.service-account-name: {{ .Values.operatorConfig.securityServiceAccountName
+    | quote }}
+  steprun.max-concurrent-reconciles: {{ .Values.operatorConfig.steprunMaxConcurrentReconciles
+    | quote }}
+  steprun.rate-limiter.base-delay: {{ .Values.operatorConfig.steprunRateLimiterBaseDelay
+    | quote }}
+  steprun.rate-limiter.max-delay: {{ .Values.operatorConfig.steprunRateLimiterMaxDelay
+    | quote }}
+  story.binding.max-mutations-per-reconcile: {{ .Values.operatorConfig.storyBindingMaxMutationsPerReconcile
+    | quote }}
+  story.binding.throttle-requeue-delay: {{ .Values.operatorConfig.storyBindingThrottleRequeueDelay
+    | quote }}
+  story.max-concurrent-reconciles: {{ .Values.operatorConfig.storyMaxConcurrentReconciles
+    | quote }}
+  story.rate-limiter.base-delay: {{ .Values.operatorConfig.storyRateLimiterBaseDelay
+    | quote }}
+  story.rate-limiter.max-delay: {{ .Values.operatorConfig.storyRateLimiterMaxDelay
+    | quote }}
+  storyrun.binding.max-mutations-per-reconcile: {{ .Values.operatorConfig.storyrunBindingMaxMutationsPerReconcile
+    | quote }}
+  storyrun.binding.throttle-requeue-delay: {{ .Values.operatorConfig.storyrunBindingThrottleRequeueDelay
+    | quote }}
+  storyrun.global-concurrency: {{ .Values.operatorConfig.storyrunGlobalConcurrency
+    | quote }}
+  storyrun.max-concurrent-reconciles: {{ .Values.operatorConfig.storyrunMaxConcurrentReconciles
+    | quote }}
+  storyrun.max-inline-inputs-size: {{ .Values.operatorConfig.storyrunMaxInlineInputsSize
+    | quote }}
+  storyrun.queue.default.concurrency: {{ .Values.operatorConfig.storyrunQueueDefaultConcurrency
+    | quote }}
+  storyrun.queue.default.default-priority: {{ .Values.operatorConfig.storyrunQueueDefaultDefaultPriority
+    | quote }}
+  storyrun.rate-limiter.base-delay: {{ .Values.operatorConfig.storyrunRateLimiterBaseDelay
+    | quote }}
+  storyrun.rate-limiter.max-delay: {{ .Values.operatorConfig.storyrunRateLimiterMaxDelay
+    | quote }}
+  storyrun.retention-seconds: {{ .Values.operatorConfig.storyrunRetentionSeconds
+    | quote }}
+  streaming.ttl-seconds-after-finished: {{ .Values.operatorConfig.streamingTtlSecondsAfterFinished
+    | quote }}
+  telemetry.enabled: {{ .Values.operatorConfig.telemetryEnabled | quote }}
+  telemetry.trace-propagation: {{ .Values.operatorConfig.telemetryTracePropagation
+    | quote }}
+  template.max-concurrent-reconciles: {{ .Values.operatorConfig.templateMaxConcurrentReconciles
+    | quote }}
+  template.rate-limiter.base-delay: {{ .Values.operatorConfig.templateRateLimiterBaseDelay
+    | quote }}
+  template.rate-limiter.max-delay: {{ .Values.operatorConfig.templateRateLimiterMaxDelay
+    | quote }}
+  templating.deterministic: {{ .Values.operatorConfig.templatingDeterministic | quote
+    }}
+  templating.evaluation-timeout: {{ .Values.operatorConfig.templatingEvaluationTimeout
+    | quote }}
+  templating.materialize-engram: {{ .Values.operatorConfig.templatingMaterializeEngram
+    | quote }}
+  templating.max-output-bytes: {{ .Values.operatorConfig.templatingMaxOutputBytes
+    | quote }}
+  templating.offloaded-data-policy: {{ .Values.operatorConfig.templatingOffloadedDataPolicy
+    | quote }}
+  timeout.approval-default: {{ .Values.operatorConfig.timeoutApprovalDefault | quote
+    }}
+  timeout.conditional-default: {{ .Values.operatorConfig.timeoutConditionalDefault
+    | quote }}
+  timeout.default-step: {{ .Values.operatorConfig.timeoutDefaultStep | quote }}
+  timeout.external-data-default: {{ .Values.operatorConfig.timeoutExternalDataDefault
+    | quote }}
