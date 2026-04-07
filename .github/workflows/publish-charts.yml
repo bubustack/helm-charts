@@ -38,11 +38,7 @@ jobs:
         env:
           CR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          owner: bubustack
-          repo: helm-charts
           charts_dir: charts
-          packages_dir: .cr-release-packages
-          charts_repo_url: https://bubustack.github.io/helm-charts
 
       - name: Push packages to GHCR
         env:
