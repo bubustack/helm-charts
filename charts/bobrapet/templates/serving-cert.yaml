@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-serving-cert
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+spec:
+  dnsNames:
+  - '{{ include "bobrapet.fullname" . }}-webhook-service.bobrapet-system.svc'
+  - '{{ include "bobrapet.fullname" . }}-webhook-service.bobrapet-system.svc.{{ .Values.kubernetesClusterDomain
+    }}'
+  issuerRef:
+    kind: ClusterIssuer
+    name: '{{ include "bobrapet.fullname" . }}-shared-ca'
+  privateKey:
+    rotationPolicy: Always
+  secretName: bobrapet-webhook-server-cert

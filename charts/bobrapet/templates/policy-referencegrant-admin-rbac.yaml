@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-policy-referencegrant-admin-role
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - policy.bubustack.io
+  resources:
+  - referencegrants
+  verbs:
+  - '*'
+- apiGroups:
+  - policy.bubustack.io
+  resources:
+  - referencegrants/status
+  verbs:
+  - get

@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-catalog-engramtemplate-admin-role
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - catalog.bubustack.io
+  resources:
+  - engramtemplates
+  verbs:
+  - '*'
+- apiGroups:
+  - catalog.bubustack.io
+  resources:
+  - engramtemplates/status
+  verbs:
+  - get

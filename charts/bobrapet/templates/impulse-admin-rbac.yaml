@@ -1,0 +1,19 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "bobrapet.fullname" . }}-impulse-admin-role
+  labels:
+  {{- include "bobrapet.labels" . | nindent 4 }}
+rules:
+- apiGroups:
+  - bubustack.io
+  resources:
+  - impulses
+  verbs:
+  - '*'
+- apiGroups:
+  - bubustack.io
+  resources:
+  - impulses/status
+  verbs:
+  - get
