@@ -1,78 +1,44 @@
-# Default values for the bobrapet Helm chart.
-#
-# This file must stay compatible with the templates in templates/.
-# The template references flat keys (.Values.image, .Values.manager, etc.).
-
-replicaCount: 1
-
-image:
-  repository: ghcr.io/bubustack/bobrapet
-  tag: "0.1.2"
-  pullPolicy: IfNotPresent
-
-imagePullSecrets: []
-
-podLabels: {}
-podAnnotations: {}
-
-podSecurityContext:
-  runAsNonRoot: true
-  seccompProfile:
-    type: RuntimeDefault
-
-securityContext:
-  allowPrivilegeEscalation: false
-  capabilities:
-    drop:
-      - ALL
-  readOnlyRootFilesystem: true
-
-resources:
-  limits:
-    cpu: 500m
-    memory: 128Mi
-  requests:
-    cpu: 10m
-    memory: 64Mi
-
-manager:
-  leaderElect: false
-  leaderElectionID: ""
-  leaderElectionNamespace: ""
-  metricsBindAddress: ":8443"
-  healthProbeBindAddress: ":8081"
-  logLevel: info
-  configNamespace: ""
-  configName: bobrapet-operator-config
-  extraArgs: []
-  env: []
-  volumeMounts: []
-  volumes: []
-
-metrics:
-  enabled: true
-  service:
-    port: 8443
-
-webhook:
-  enabled: false
-  targetPort: 9443
-  certSecretName: ""
-
-nodeSelector: {}
-tolerations: []
-affinity: {}
-
-serviceAccount:
-  create: true
-  name: ""
-  annotations: {}
-  automount: true
-
+controllerManager:
+  manager:
+    args:
+    - --metrics-bind-address=:8443
+    - --health-probe-bind-address=:8081
+    - --config-namespace=bobrapet-system
+    - --config-name=bobrapet-operator-config
+    - --webhook-cert-path=/tmp/k8s-webhook-server/serving-certs
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+    image:
+      repository: ghcr.io/bubustack/bobrapet
+      tag: "0.1.3"
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 500m
+        memory: 128Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
+  nodeSelector: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  replicas: 1
+  tolerations: []
+  topologySpreadConstraints: []
 kubernetesClusterDomain: cluster.local
-
-# Operator ConfigMap values. These are mounted as a ConfigMap and consumed
-# by the operator at runtime. See https://bubustack.io/docs/operator/configuration.
+metricsService:
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: 8443
+  type: ClusterIP
 operatorConfig:
   controllerCleanupInterval: 1h
   controllerMaxConcurrentReconciles: "10"
@@ -80,6 +46,11 @@ operatorConfig:
   controllerReconcileTimeout: 1m
   controllerRequeueBaseDelay: 2s
   controllerRequeueMaxDelay: 1m
+  controllerStorageProvider: s3
+  controllerStorageS3Bucket: bubu-default
+  controllerStorageS3Endpoint: http://seaweedfs-s3.seaweedfs:8333
+  controllerStorageS3Region: us-east-1
+  controllerStorageS3UsePathStyle: "true"
   controllerTransportGrpcDefaultTlsSecret: ""
   controllerTransportGrpcEnableDownstreamTargets: "true"
   controllerTransportHeartbeatInterval: 30s
@@ -94,6 +65,7 @@ operatorConfig:
   engramDefaultGrpcPort: "50051"
   engramDefaultHangTimeoutSeconds: "30"
   engramDefaultMaxInlineSize: "4096"
+  engramDefaultMaxRecursionDepth: "32"
   engramDefaultMaxRecvMsgBytes: "10485760"
   engramDefaultMaxSendMsgBytes: "10485760"
   engramDefaultMessageTimeoutSeconds: "30"
@@ -169,3 +141,14 @@ operatorConfig:
   timeoutConditionalDefault: 10m
   timeoutDefaultStep: 5m
   timeoutExternalDataDefault: 30m
+serviceAccount:
+  annotations: {}
+  automount: true
+  create: true
+  name: ""
+webhookService:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 9443
+  type: ClusterIP
