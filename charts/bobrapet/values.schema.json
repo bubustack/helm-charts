@@ -1,0 +1,494 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "controllerManager": {
+            "type": "object",
+            "properties": {
+                "manager": {
+                    "type": "object",
+                    "properties": {
+                        "args": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "containerSecurityContext": {
+                            "type": "object",
+                            "properties": {
+                                "allowPrivilegeEscalation": {
+                                    "type": "boolean"
+                                },
+                                "capabilities": {
+                                    "type": "object",
+                                    "properties": {
+                                        "drop": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "readOnlyRootFilesystem": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
+                        "image": {
+                            "type": "object",
+                            "properties": {
+                                "repository": {
+                                    "type": "string"
+                                },
+                                "tag": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "imagePullPolicy": {
+                            "type": "string"
+                        },
+                        "resources": {
+                            "type": "object",
+                            "properties": {
+                                "limits": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string"
+                                        },
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "requests": {
+                                    "type": "object",
+                                    "properties": {
+                                        "cpu": {
+                                            "type": "string"
+                                        },
+                                        "memory": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "nodeSelector": {
+                    "type": "object"
+                },
+                "podSecurityContext": {
+                    "type": "object",
+                    "properties": {
+                        "runAsNonRoot": {
+                            "type": "boolean"
+                        },
+                        "seccompProfile": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "replicas": {
+                    "type": "integer"
+                },
+                "tolerations": {
+                    "type": "array"
+                },
+                "topologySpreadConstraints": {
+                    "type": "array"
+                }
+            }
+        },
+        "kubernetesClusterDomain": {
+            "type": "string"
+        },
+        "metricsService": {
+            "type": "object",
+            "properties": {
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "port": {
+                                "type": "integer"
+                            },
+                            "protocol": {
+                                "type": "string"
+                            },
+                            "targetPort": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "operatorConfig": {
+            "type": "object",
+            "properties": {
+                "controllerCleanupInterval": {
+                    "type": "string"
+                },
+                "controllerMaxConcurrentReconciles": {
+                    "type": "string"
+                },
+                "controllerMaxStoryWithBlockSizeBytes": {
+                    "type": "string"
+                },
+                "controllerReconcileTimeout": {
+                    "type": "string"
+                },
+                "controllerRequeueBaseDelay": {
+                    "type": "string"
+                },
+                "controllerRequeueMaxDelay": {
+                    "type": "string"
+                },
+                "controllerStorageProvider": {
+                    "type": "string"
+                },
+                "controllerStorageS3Bucket": {
+                    "type": "string"
+                },
+                "controllerStorageS3Endpoint": {
+                    "type": "string"
+                },
+                "controllerStorageS3Region": {
+                    "type": "string"
+                },
+                "controllerStorageS3UsePathStyle": {
+                    "type": "string"
+                },
+                "controllerTransportGrpcDefaultTlsSecret": {
+                    "type": "string"
+                },
+                "controllerTransportGrpcEnableDownstreamTargets": {
+                    "type": "string"
+                },
+                "controllerTransportHeartbeatInterval": {
+                    "type": "string"
+                },
+                "controllerTransportHeartbeatTimeout": {
+                    "type": "string"
+                },
+                "debugEnableMetrics": {
+                    "type": "string"
+                },
+                "debugEnableStepOutputLogging": {
+                    "type": "string"
+                },
+                "debugEnableVerboseLogging": {
+                    "type": "string"
+                },
+                "engramDefaultChannelBufferSize": {
+                    "type": "string"
+                },
+                "engramDefaultDialTimeoutSeconds": {
+                    "type": "string"
+                },
+                "engramDefaultGracefulShutdownTimeoutSeconds": {
+                    "type": "string"
+                },
+                "engramDefaultGrpcHeartbeatIntervalSeconds": {
+                    "type": "string"
+                },
+                "engramDefaultGrpcPort": {
+                    "type": "string"
+                },
+                "engramDefaultHangTimeoutSeconds": {
+                    "type": "string"
+                },
+                "engramDefaultMaxInlineSize": {
+                    "type": "string"
+                },
+                "engramDefaultMaxRecursionDepth": {
+                    "type": "string"
+                },
+                "engramDefaultMaxRecvMsgBytes": {
+                    "type": "string"
+                },
+                "engramDefaultMaxSendMsgBytes": {
+                    "type": "string"
+                },
+                "engramDefaultMessageTimeoutSeconds": {
+                    "type": "string"
+                },
+                "engramDefaultReconnectBaseBackoffMillis": {
+                    "type": "string"
+                },
+                "engramDefaultReconnectMaxBackoffSeconds": {
+                    "type": "string"
+                },
+                "engramDefaultReconnectMaxRetries": {
+                    "type": "string"
+                },
+                "engramDefaultStorageTimeoutSeconds": {
+                    "type": "string"
+                },
+                "engramDefaultTerminationGracePeriodSeconds": {
+                    "type": "string"
+                },
+                "engramMaxConcurrentReconciles": {
+                    "type": "string"
+                },
+                "engramRateLimiterBaseDelay": {
+                    "type": "string"
+                },
+                "engramRateLimiterMaxDelay": {
+                    "type": "string"
+                },
+                "imagesPullPolicy": {
+                    "type": "string"
+                },
+                "impulseMaxConcurrentReconciles": {
+                    "type": "string"
+                },
+                "impulseRateLimiterBaseDelay": {
+                    "type": "string"
+                },
+                "impulseRateLimiterMaxDelay": {
+                    "type": "string"
+                },
+                "jobBackoffLimit": {
+                    "type": "string"
+                },
+                "jobRestartPolicy": {
+                    "type": "string"
+                },
+                "jobTtlSecondsAfterFinished": {
+                    "type": "string"
+                },
+                "loopDefaultBatchSize": {
+                    "type": "string"
+                },
+                "loopMaxBatchSize": {
+                    "type": "string"
+                },
+                "loopMaxConcurrency": {
+                    "type": "string"
+                },
+                "loopMaxConcurrencyLimit": {
+                    "type": "string"
+                },
+                "loopMaxIterations": {
+                    "type": "string"
+                },
+                "referencesCrossNamespacePolicy": {
+                    "type": "string"
+                },
+                "resourcesDefaultCpuLimit": {
+                    "type": "string"
+                },
+                "resourcesDefaultCpuRequest": {
+                    "type": "string"
+                },
+                "resourcesDefaultMemoryLimit": {
+                    "type": "string"
+                },
+                "resourcesDefaultMemoryRequest": {
+                    "type": "string"
+                },
+                "resourcesEngramCpuLimit": {
+                    "type": "string"
+                },
+                "resourcesEngramCpuRequest": {
+                    "type": "string"
+                },
+                "resourcesEngramMemoryLimit": {
+                    "type": "string"
+                },
+                "resourcesEngramMemoryRequest": {
+                    "type": "string"
+                },
+                "retryExponentialBackoffBase": {
+                    "type": "string"
+                },
+                "retryExponentialBackoffMax": {
+                    "type": "string"
+                },
+                "retryMaxRetries": {
+                    "type": "string"
+                },
+                "securityAllowPrivilegeEscalation": {
+                    "type": "string"
+                },
+                "securityAutomountServiceAccountToken": {
+                    "type": "string"
+                },
+                "securityDropCapabilities": {
+                    "type": "string"
+                },
+                "securityReadOnlyRootFilesystem": {
+                    "type": "string"
+                },
+                "securityRunAsNonRoot": {
+                    "type": "string"
+                },
+                "securityRunAsUser": {
+                    "type": "string"
+                },
+                "securityServiceAccountName": {
+                    "type": "string"
+                },
+                "steprunMaxConcurrentReconciles": {
+                    "type": "string"
+                },
+                "steprunRateLimiterBaseDelay": {
+                    "type": "string"
+                },
+                "steprunRateLimiterMaxDelay": {
+                    "type": "string"
+                },
+                "storyBindingMaxMutationsPerReconcile": {
+                    "type": "string"
+                },
+                "storyBindingThrottleRequeueDelay": {
+                    "type": "string"
+                },
+                "storyMaxConcurrentReconciles": {
+                    "type": "string"
+                },
+                "storyRateLimiterBaseDelay": {
+                    "type": "string"
+                },
+                "storyRateLimiterMaxDelay": {
+                    "type": "string"
+                },
+                "storyrunBindingMaxMutationsPerReconcile": {
+                    "type": "string"
+                },
+                "storyrunBindingThrottleRequeueDelay": {
+                    "type": "string"
+                },
+                "storyrunGlobalConcurrency": {
+                    "type": "string"
+                },
+                "storyrunMaxConcurrentReconciles": {
+                    "type": "string"
+                },
+                "storyrunMaxInlineInputsSize": {
+                    "type": "string"
+                },
+                "storyrunQueueDefaultConcurrency": {
+                    "type": "string"
+                },
+                "storyrunQueueDefaultDefaultPriority": {
+                    "type": "string"
+                },
+                "storyrunRateLimiterBaseDelay": {
+                    "type": "string"
+                },
+                "storyrunRateLimiterMaxDelay": {
+                    "type": "string"
+                },
+                "storyrunRetentionSeconds": {
+                    "type": "string"
+                },
+                "streamingTtlSecondsAfterFinished": {
+                    "type": "string"
+                },
+                "telemetryEnabled": {
+                    "type": "string"
+                },
+                "telemetryTracePropagation": {
+                    "type": "string"
+                },
+                "templateMaxConcurrentReconciles": {
+                    "type": "string"
+                },
+                "templateRateLimiterBaseDelay": {
+                    "type": "string"
+                },
+                "templateRateLimiterMaxDelay": {
+                    "type": "string"
+                },
+                "templatingDeterministic": {
+                    "type": "string"
+                },
+                "templatingEvaluationTimeout": {
+                    "type": "string"
+                },
+                "templatingMaterializeEngram": {
+                    "type": "string"
+                },
+                "templatingMaxOutputBytes": {
+                    "type": "string"
+                },
+                "templatingOffloadedDataPolicy": {
+                    "type": "string"
+                },
+                "timeoutApprovalDefault": {
+                    "type": "string"
+                },
+                "timeoutConditionalDefault": {
+                    "type": "string"
+                },
+                "timeoutDefaultStep": {
+                    "type": "string"
+                },
+                "timeoutExternalDataDefault": {
+                    "type": "string"
+                }
+            }
+        },
+        "serviceAccount": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object"
+                },
+                "automount": {
+                    "type": "boolean"
+                },
+                "create": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "webhookService": {
+            "type": "object",
+            "properties": {
+                "ports": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "port": {
+                                "type": "integer"
+                            },
+                            "protocol": {
+                                "type": "string"
+                            },
+                            "targetPort": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
