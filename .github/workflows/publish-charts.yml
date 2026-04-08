@@ -14,6 +14,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+      id-token: write # Required for cosign keyless signing
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -22,6 +23,9 @@ jobs:
 
       - name: Setup Helm
         uses: azure/setup-helm@v5
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
 
       - name: Lint charts
         run: |
@@ -41,7 +45,7 @@ jobs:
           charts_dir: charts
           skip_existing: true
 
-      - name: Push packages to GHCR
+      - name: Push packages to GHCR and sign with cosign
         env:
           OCI_REGISTRY: ghcr.io/${{ github.repository_owner }}/charts
         run: |
@@ -51,6 +55,14 @@ jobs:
             for chart in .cr-release-packages/*.tgz; do
               echo "Publishing ${chart} to ${OCI_REGISTRY}"
               helm push "${chart}" "oci://${OCI_REGISTRY}"
+
+              # Extract chart name and version for cosign digest lookup
+              CHART_NAME=$(helm show chart "${chart}" | grep '^name:' | awk '{print $2}')
+              CHART_VERSION=$(helm show chart "${chart}" | grep '^version:' | awk '{print $2}')
+              OCI_REF="${OCI_REGISTRY}/${CHART_NAME}:${CHART_VERSION}"
+
+              echo "Signing ${OCI_REF} with cosign (keyless)"
+              cosign sign --yes "${OCI_REF}"
             done
           else
             echo "No chart packages produced in this run."
