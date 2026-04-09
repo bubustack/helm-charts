@@ -50,6 +50,9 @@ jobs:
           charts_dir: charts
           skip_existing: true
 
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io --username "${{ github.actor }}" --password-stdin
+
       - name: Push packages to GHCR and sign with cosign
         env:
           OCI_REGISTRY: ghcr.io/${{ github.repository_owner }}/charts
@@ -59,15 +62,15 @@ jobs:
             echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io --username "${{ github.actor }}" --password-stdin
             for chart in .cr-release-packages/*.tgz; do
               echo "Publishing ${chart} to ${OCI_REGISTRY}"
-              helm push "${chart}" "oci://${OCI_REGISTRY}"
+              PUSH_OUTPUT=$(helm push "${chart}" "oci://${OCI_REGISTRY}" 2>&1)
+              echo "${PUSH_OUTPUT}"
 
-              # Extract chart name and version for cosign digest lookup
+              # Extract chart name and digest from helm push output
               CHART_NAME=$(helm show chart "${chart}" | grep '^name:' | awk '{print $2}')
-              CHART_VERSION=$(helm show chart "${chart}" | grep '^version:' | awk '{print $2}')
-              OCI_REF="${OCI_REGISTRY}/${CHART_NAME}:${CHART_VERSION}"
+              DIGEST=$(echo "${PUSH_OUTPUT}" | grep 'Digest:' | awk '{print $2}')
 
-              echo "Signing ${OCI_REF} with cosign (keyless)"
-              cosign sign --yes "${OCI_REF}"
+              echo "Signing ${OCI_REGISTRY}/${CHART_NAME}@${DIGEST} with cosign (keyless)"
+              cosign sign --yes "${OCI_REGISTRY}/${CHART_NAME}@${DIGEST}"
             done
           else
             echo "No chart packages produced in this run."
