@@ -18,8 +18,8 @@ controllerManager:
       connectorImage: ghcr.io/bubustack/bobravoz-grpc-connector:latest
       connectorImagePullPolicy: IfNotPresent
     image:
-      repository: example.com/bobravoz-grpc
-      tag: "0.3.0"
+      repository: ghcr.io/bubustack/bobravoz-grpc
+      tag: "0.3.1"
     imagePullPolicy: IfNotPresent
     resources:
       limits:
