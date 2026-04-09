@@ -1,0 +1,83 @@
+controllerManager:
+  manager:
+    args:
+    - --metrics-bind-address=:8443
+    - --health-probe-bind-address=:8081
+    - --hub-port=9000
+    - --config-namespace=bobrapet-system
+    - --config-name=bobravoz-grpc-operator-config
+    - --metrics-cert-path=/tmp/k8s-metrics-server/metrics-certs
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+    env:
+      bubuHubServiceName: bobravoz-grpc-hub
+      connectorImage: ghcr.io/bubustack/bobravoz-grpc-connector:latest
+      connectorImagePullPolicy: IfNotPresent
+    image:
+      repository: example.com/bobravoz-grpc
+      tag: "0.3.0"
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 10m
+        memory: 64Mi
+  nodeSelector: {}
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  replicas: 1
+  tolerations: []
+  topologySpreadConstraints: []
+hub:
+  ports:
+  - name: grpc
+    port: 9000
+    protocol: TCP
+    targetPort: 9000
+  type: ClusterIP
+kubernetesClusterDomain: cluster.local
+metricsService:
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: 8443
+  type: ClusterIP
+operatorConfig:
+  connectorImage: ghcr.io/bubustack/bobravoz-grpc-connector:latest
+  connectorImagePullPolicy: IfNotPresent
+  hubBufferEvictionInterval: 1m
+  hubBufferEvictionTtl: 10m
+  hubBufferMaxBytes: "10485760"
+  hubBufferMaxMessages: "1000"
+  hubChannelBufferSize: "100"
+  hubMaxActiveStreams: "2000"
+  hubMaxBuffers: "1000"
+  hubMaxDownstreamsHardCap: "64"
+  hubPerMessageTimeout: 10m
+  hubTransportSecurityMode: tls
+  telemetryTracePropagation: "true"
+  templatingDeterministic: "false"
+  templatingEvaluationTimeout: 5s
+  templatingMaterializeEngram: bubu-materialize
+  templatingMaxOutputBytes: "65536"
+  templatingOffloadedDataPolicy: error
+serviceAccount:
+  annotations: {}
+  automount: true
+  create: true
+  name: ""
+webhookService:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 9443
+  type: ClusterIP
