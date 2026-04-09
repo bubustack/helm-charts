@@ -1,0 +1,33 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: {{ include "bobravoz-grpc.fullname" . }}-transport-connector-mutating-webhook-configuration
+  annotations:
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "bobravoz-grpc.fullname" . }}-serving-cert
+  labels:
+  {{- include "bobravoz-grpc.labels" . | nindent 4 }}
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: '{{ include "bobravoz-grpc.fullname" . }}-webhook-service'
+      namespace: '{{ .Release.Namespace }}'
+      path: /mutate-transport-connector-pod
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: mtransport-connector.bobravoz.bubustack.io
+  objectSelector:
+    matchExpressions:
+    - key: bubustack.io/engram
+      operator: Exists
+  rules:
+  - apiGroups:
+    - ""
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    resources:
+    - pods
+  sideEffects: None

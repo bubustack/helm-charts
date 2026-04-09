@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "bobravoz-grpc.fullname" . }}-metrics-certs
+  labels:
+  {{- include "bobravoz-grpc.labels" . | nindent 4 }}
+spec:
+  dnsNames:
+  - '{{ include "bobravoz-grpc.fullname" . }}-controller-manager-metrics-service.{{
+    .Release.Namespace }}.svc'
+  - '{{ include "bobravoz-grpc.fullname" . }}-controller-manager-metrics-service.{{
+    .Release.Namespace }}.svc.{{ .Values.kubernetesClusterDomain }}'
+  issuerRef:
+    kind: ClusterIssuer
+    name: bobrapet-shared-ca
+  privateKey:
+    rotationPolicy: Always
+  secretName: bobravoz-grpc-metrics-server-cert
