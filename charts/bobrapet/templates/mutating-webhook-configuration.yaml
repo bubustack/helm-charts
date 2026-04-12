@@ -3,7 +3,7 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: {{ include "bobrapet.fullname" . }}-mutating-webhook-configuration
   annotations:
-    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "bobrapet.fullname" . }}-system/bobrapet-serving-cert
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "bobrapet.fullname" . }}-serving-cert
   labels:
   {{- include "bobrapet.labels" . | nindent 4 }}
 webhooks:
@@ -12,7 +12,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /mutate-bubustack-io-v1alpha1-engram
   failurePolicy: Fail
   name: mengram-v1alpha1.kb.io
@@ -32,7 +32,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /mutate-bubustack-io-v1alpha1-impulse
   failurePolicy: Fail
   name: mimpulse-v1alpha1.kb.io
@@ -52,7 +52,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /mutate-bubustack-io-v1alpha1-story
   failurePolicy: Fail
   name: mstory-v1alpha1.kb.io

@@ -6,12 +6,11 @@ metadata:
   {{- include "bobrapet.labels" . | nindent 4 }}
 spec:
   dnsNames:
-  - '{{ include "bobrapet.fullname" . }}-webhook-service.bobrapet-system.svc'
-  - '{{ include "bobrapet.fullname" . }}-webhook-service.bobrapet-system.svc.{{ .Values.kubernetesClusterDomain
-    }}'
+  - '{{ include "bobrapet.fullname" . }}-webhook-service.{{ .Release.Namespace }}.svc'
+  - '{{ include "bobrapet.fullname" . }}-webhook-service.{{ .Release.Namespace }}.svc.{{ .Values.kubernetesClusterDomain }}'
   issuerRef:
     kind: ClusterIssuer
     name: '{{ include "bobrapet.fullname" . }}-shared-ca'
   privateKey:
     rotationPolicy: Always
-  secretName: bobrapet-webhook-server-cert
+  secretName: {{ include "bobrapet.fullname" . }}-webhook-server-cert

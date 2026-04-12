@@ -3,7 +3,7 @@ kind: ValidatingWebhookConfiguration
 metadata:
   name: {{ include "bobrapet.fullname" . }}-validating-webhook-configuration
   annotations:
-    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "bobrapet.fullname" . }}-system/bobrapet-serving-cert
+    cert-manager.io/inject-ca-from: {{ .Release.Namespace }}/{{ include "bobrapet.fullname" . }}-serving-cert
   labels:
   {{- include "bobrapet.labels" . | nindent 4 }}
 webhooks:
@@ -12,7 +12,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-runs-bubustack-io-v1alpha1-effectclaim
   failurePolicy: Fail
   name: veffectclaim-v1alpha1.kb.io
@@ -32,7 +32,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-bubustack-io-v1alpha1-engram
   failurePolicy: Fail
   name: vengram-v1alpha1.kb.io
@@ -52,7 +52,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-bubustack-io-v1alpha1-impulse
   failurePolicy: Fail
   name: vimpulse-v1alpha1.kb.io
@@ -72,7 +72,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-runs-bubustack-io-v1alpha1-steprun
   failurePolicy: Fail
   name: vsteprun-v1alpha1.kb.io
@@ -92,7 +92,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-bubustack-io-v1alpha1-story
   failurePolicy: Fail
   name: vstory-v1alpha1.kb.io
@@ -112,7 +112,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-runs-bubustack-io-v1alpha1-storyrun
   failurePolicy: Fail
   name: vstoryrun-v1alpha1.kb.io
@@ -132,7 +132,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-runs-bubustack-io-v1alpha1-storytrigger
   failurePolicy: Fail
   name: vstorytrigger-v1alpha1.kb.io
@@ -152,7 +152,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-transport-bubustack-io-v1alpha1-transport
   failurePolicy: Fail
   name: vtransport.kb.io
@@ -172,7 +172,7 @@ webhooks:
   clientConfig:
     service:
       name: '{{ include "bobrapet.fullname" . }}-webhook-service'
-      namespace: bobrapet-system
+      namespace: '{{ .Release.Namespace }}'
       path: /validate-transport-bubustack-io-v1alpha1-transportbinding
   failurePolicy: Fail
   name: vtransportbinding.kb.io

@@ -8,4 +8,4 @@ metadata:
     kustomize.config.k8s.io/skip-name-prefix: "true"
 spec:
   ca:
-    secretName: bobrapet-ca-root
+    secretName: {{ include "bobrapet.fullname" . }}-ca-root
