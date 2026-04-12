@@ -1,3 +1,4 @@
+{{- $sharedCAIssuerName := .Values.sharedCAIssuerName | default "bobrapet-shared-ca" -}}
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -7,11 +8,10 @@ metadata:
 spec:
   dnsNames:
   - '{{ include "bobravoz-grpc.fullname" . }}-hub.{{ .Release.Namespace }}.svc'
-  - '{{ include "bobravoz-grpc.fullname" . }}-hub.{{ .Release.Namespace }}.svc.{{ .Values.kubernetesClusterDomain
-    }}'
+  - '{{ include "bobravoz-grpc.fullname" . }}-hub.{{ .Release.Namespace }}.svc.{{ .Values.kubernetesClusterDomain }}'
   issuerRef:
     kind: ClusterIssuer
-    name: bobrapet-shared-ca
+    name: {{ $sharedCAIssuerName | quote }}
   privateKey:
     rotationPolicy: Always
-  secretName: bobravoz-grpc-hub-tls
+  secretName: {{ include "bobravoz-grpc.fullname" . }}-hub-tls

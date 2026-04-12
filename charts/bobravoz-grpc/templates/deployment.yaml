@@ -1,3 +1,6 @@
+{{- $managerImageTag := .Values.controllerManager.manager.image.tag | default "" -}}
+{{- $defaultConnectorImage := "ghcr.io/bubustack/bobravoz-grpc-connector:latest" -}}
+{{- $connectorImage := .Values.controllerManager.manager.env.connectorImage | default $defaultConnectorImage -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,7 +25,16 @@ spec:
         kubectl.kubernetes.io/default-container: manager
     spec:
       containers:
-      - args: {{- toYaml .Values.controllerManager.manager.args | nindent 8 }}
+      - args:
+{{- range $arg := .Values.controllerManager.manager.args }}
+{{- if eq $arg "--config-namespace=bobrapet-system" }}
+        - --config-namespace={{ $.Release.Namespace }}
+{{- else if eq $arg "--config-name=bobravoz-grpc-operator-config" }}
+        - --config-name={{ include "bobravoz-grpc.fullname" $ }}-operator-config
+{{- else }}
+        - {{ $arg }}
+{{- end }}
+{{- end }}
         command:
         - /manager
         env:
@@ -33,7 +45,7 @@ spec:
         - name: BUBU_HUB_SERVICE_NAME
           value: {{ quote .Values.controllerManager.manager.env.bubuHubServiceName }}
         - name: CONNECTOR_IMAGE
-          value: {{ quote .Values.controllerManager.manager.env.connectorImage }}
+          value: {{ if eq $connectorImage $defaultConnectorImage }}{{ printf "ghcr.io/bubustack/bobravoz-grpc-connector:%s" .Chart.AppVersion | quote }}{{ else }}{{ $connectorImage | quote }}{{ end }}
         - name: CONNECTOR_IMAGE_PULL_POLICY
           value: {{ quote .Values.controllerManager.manager.env.connectorImagePullPolicy
             }}
@@ -47,8 +59,7 @@ spec:
               fieldPath: metadata.namespace
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.controllerManager.manager.image.repository }}:{{ .Values.controllerManager.manager.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.controllerManager.manager.image.repository }}:{{ if or (eq $managerImageTag "") (eq $managerImageTag "latest") }}{{ .Chart.AppVersion }}{{ else }}{{ $managerImageTag }}{{ end }}
         imagePullPolicy: {{ .Values.controllerManager.manager.imagePullPolicy }}
         livenessProbe:
           httpGet:
@@ -106,7 +117,7 @@ spec:
           - key: tls.key
             path: tls.key
           optional: false
-          secretName: bobravoz-grpc-metrics-server-cert
+          secretName: {{ include "bobravoz-grpc.fullname" . }}-metrics-server-cert
       - name: webhook-certs
         secret:
-          secretName: bobravoz-grpc-webhook-server-cert
+          secretName: {{ include "bobravoz-grpc.fullname" . }}-webhook-server-cert

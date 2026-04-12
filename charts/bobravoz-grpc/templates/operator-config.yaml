@@ -1,3 +1,5 @@
+{{- $defaultConnectorImage := "ghcr.io/bubustack/bobravoz-grpc-connector:latest" -}}
+{{- $connectorImage := .Values.operatorConfig.connectorImage | default $defaultConnectorImage -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -5,7 +7,7 @@ metadata:
   labels:
   {{- include "bobravoz-grpc.labels" . | nindent 4 }}
 data:
-  connector.image: {{ .Values.operatorConfig.connectorImage | quote }}
+  connector.image: {{ if eq $connectorImage $defaultConnectorImage }}{{ printf "ghcr.io/bubustack/bobravoz-grpc-connector:%s" .Chart.AppVersion | quote }}{{ else }}{{ $connectorImage | quote }}{{ end }}
   connector.image-pull-policy: {{ .Values.operatorConfig.connectorImagePullPolicy
     | quote }}
   hub.buffer-eviction-interval: {{ .Values.operatorConfig.hubBufferEvictionInterval
