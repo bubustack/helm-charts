@@ -2,6 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: {{ include "bobrapet.fullname" . }}-ca-root
+  namespace: cert-manager
   labels:
   {{- include "bobrapet.labels" . | nindent 4 }}
 spec:
@@ -14,4 +15,4 @@ spec:
     name: '{{ include "bobrapet.fullname" . }}-selfsigned-bootstrap'
   privateKey:
     rotationPolicy: Always
-  secretName: bobrapet-ca-root
+  secretName: {{ include "bobrapet.fullname" . }}-ca-root

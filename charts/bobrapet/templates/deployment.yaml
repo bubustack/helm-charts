@@ -1,3 +1,4 @@
+{{- $imageTag := .Values.controllerManager.manager.image.tag | default "" -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -22,14 +23,22 @@ spec:
         kubectl.kubernetes.io/default-container: manager
     spec:
       containers:
-      - args: {{- toYaml .Values.controllerManager.manager.args | nindent 8 }}
+      - args:
+{{- range $arg := .Values.controllerManager.manager.args }}
+{{- if eq $arg "--config-namespace=bobrapet-system" }}
+        - --config-namespace={{ $.Release.Namespace }}
+{{- else if eq $arg "--config-name=bobrapet-operator-config" }}
+        - --config-name={{ include "bobrapet.fullname" $ }}-operator-config
+{{- else }}
+        - {{ $arg }}
+{{- end }}
+{{- end }}
         command:
         - /manager
         env:
         - name: KUBERNETES_CLUSTER_DOMAIN
           value: {{ quote .Values.kubernetesClusterDomain }}
-        image: {{ .Values.controllerManager.manager.image.repository }}:{{ .Values.controllerManager.manager.image.tag
-          | default .Chart.AppVersion }}
+        image: {{ .Values.controllerManager.manager.image.repository }}:{{ if or (eq $imageTag "") (eq $imageTag "latest") }}{{ .Chart.AppVersion }}{{ else }}{{ $imageTag }}{{ end }}
         imagePullPolicy: {{ .Values.controllerManager.manager.imagePullPolicy }}
         livenessProbe:
           httpGet:
@@ -67,4 +76,4 @@ spec:
       volumes:
       - name: webhook-certs
         secret:
-          secretName: bobrapet-webhook-server-cert
+          secretName: {{ include "bobrapet.fullname" . }}-webhook-server-cert
