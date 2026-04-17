@@ -5,8 +5,8 @@ description: >
   streams and applies transport primitives between Engrams.
 type: application
 # version and appVersion are updated automatically by Release Please on release.
-version: 0.3.2
-appVersion: "0.3.2"
+version: 0.3.3
+appVersion: "0.3.3"
 icon: https://bubustack.io/img/logo.svg
 home: https://github.com/bubustack/bobravoz-grpc
 sources:
