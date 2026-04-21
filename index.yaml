@@ -13,6 +13,43 @@ entries:
         - name: Engram Catalog
           url: https://github.com/bubustack?tab=repositories&q=engram
     apiVersion: v2
+    appVersion: 0.1.10
+    created: "2026-04-21T08:11:41.186219943Z"
+    description: 'BubuStack''s Kubernetes-native workflow controller. Reconciles Stories,
+      StoryRuns, Engrams, Impulses, and transport bindings so AI + data pipelines
+      stay declarative. '
+    digest: 957a8e326f54b5c564f25e3c70722e2a0e7751b8a959886c68980b5f5bdbbc08
+    home: https://github.com/bubustack/bobrapet
+    icon: https://bubustack.io/img/logo.svg
+    keywords:
+    - kubernetes-operator
+    - bubustack
+    - workflow-engine
+    - ai
+    - data-pipelines
+    maintainers:
+    - name: BubuStack
+      url: https://bubustack.io
+    name: bobrapet
+    sources:
+    - https://github.com/bubustack/bobrapet
+    - https://github.com/bubustack/bobravoz-grpc
+    type: application
+    urls:
+    - https://github.com/bubustack/helm-charts/releases/download/bobrapet-0.1.10/bobrapet-0.1.10.tgz
+    version: 0.1.10
+  - annotations:
+      artifacthub.io/category: ai-machine-learning
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://bubustack.io/docs/bobrapet
+        - name: Transport Operator
+          url: https://github.com/bubustack/bobravoz-grpc
+        - name: Engram Catalog
+          url: https://github.com/bubustack?tab=repositories&q=engram
+    apiVersion: v2
     appVersion: 0.1.9
     created: "2026-04-19T18:55:31.453445529Z"
     description: 'BubuStack''s Kubernetes-native workflow controller. Reconciles Stories,
@@ -331,4 +368,4 @@ entries:
     urls:
     - https://github.com/bubustack/helm-charts/releases/download/bobravoz-grpc-0.3.1/bobravoz-grpc-0.3.1.tgz
     version: 0.3.1
-generated: "2026-04-19T19:06:24.228618876Z"
+generated: "2026-04-21T08:11:41.186253155Z"
