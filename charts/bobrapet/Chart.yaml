@@ -4,8 +4,8 @@ description: >
   BubuStack's Kubernetes-native workflow controller. Reconciles Stories, StoryRuns,
   Engrams, Impulses, and transport bindings so AI + data pipelines stay declarative.
 type: application
-version: 0.1.10
-appVersion: "0.1.10"
+version: 0.1.11
+appVersion: "0.1.11"
 icon: https://bubustack.io/img/logo.svg
 home: https://github.com/bubustack/bobrapet
 sources:
