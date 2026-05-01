@@ -15,11 +15,11 @@ controllerManager:
       readOnlyRootFilesystem: true
     env:
       bubuHubServiceName: bobravoz-grpc-hub
-      connectorImage: ghcr.io/bubustack/bobravoz-grpc-connector:0.3.5
+      connectorImage: ghcr.io/bubustack/bobravoz-grpc-connector:0.3.6
       connectorImagePullPolicy: IfNotPresent
     image:
       repository: ghcr.io/bubustack/bobravoz-grpc
-      tag: "0.3.5"
+      tag: "0.3.6"
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -52,7 +52,7 @@ metricsService:
     targetPort: 8443
   type: ClusterIP
 operatorConfig:
-  connectorImage: ghcr.io/bubustack/bobravoz-grpc-connector:0.3.5
+  connectorImage: ghcr.io/bubustack/bobravoz-grpc-connector:0.3.6
   connectorImagePullPolicy: IfNotPresent
   hubBufferEvictionInterval: 1m
   hubBufferEvictionTtl: 10m
