@@ -347,6 +347,42 @@ entries:
         - name: Engram Catalog
           url: https://github.com/bubustack?tab=repositories&q=engram
     apiVersion: v2
+    appVersion: 0.3.7
+    created: "2026-05-02T18:17:26.749622483Z"
+    description: 'Transport mesh and hub for BubuStack Stories. Fans out realtime
+      audio/video/binary streams and applies transport primitives between Engrams. '
+    digest: 14a1f6470a38dba2f9b3c80c00d4cad528a1412882dfd3bc8945ac440fb1d6d9
+    home: https://github.com/bubustack/bobravoz-grpc
+    icon: https://bubustack.io/img/logo.svg
+    keywords:
+    - grpc
+    - transport
+    - streaming
+    - kubernetes
+    - bubustack
+    maintainers:
+    - name: BubuStack
+      url: https://bubustack.io
+    name: bobravoz-grpc
+    sources:
+    - https://github.com/bubustack/bobravoz-grpc
+    - https://github.com/bubustack/bobrapet
+    type: application
+    urls:
+    - https://github.com/bubustack/helm-charts/releases/download/bobravoz-grpc-0.3.7/bobravoz-grpc-0.3.7.tgz
+    version: 0.3.7
+  - annotations:
+      artifacthub.io/category: networking
+      artifacthub.io/containsSecurityUpdates: "false"
+      artifacthub.io/license: Apache-2.0
+      artifacthub.io/links: |
+        - name: Documentation
+          url: https://bubustack.io/docs/transport
+        - name: Workflow Operator
+          url: https://github.com/bubustack/bobrapet
+        - name: Engram Catalog
+          url: https://github.com/bubustack?tab=repositories&q=engram
+    apiVersion: v2
     appVersion: 0.3.6
     created: "2026-05-01T18:50:48.249123832Z"
     description: 'Transport mesh and hub for BubuStack Stories. Fans out realtime
@@ -551,4 +587,4 @@ entries:
     urls:
     - https://github.com/bubustack/helm-charts/releases/download/bobravoz-grpc-0.3.1/bobravoz-grpc-0.3.1.tgz
     version: 0.3.1
-generated: "2026-05-01T18:50:48.249167454Z"
+generated: "2026-05-02T18:17:26.749668725Z"
